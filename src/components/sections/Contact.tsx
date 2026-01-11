@@ -1,69 +1,77 @@
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin } from 'lucide-react'
+import { Mail, Phone, MapPin, Send } from 'lucide-react'
 import { resumeData } from '../../data/resume'
 
 export default function Contact() {
   return (
-    <section id="contact" className="section-container">
+    <section id="contact" className="section-compact">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.6 }}
+        className="max-w-3xl"
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">Get In Touch</h2>
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold mb-2">Get In Touch</h2>
+          <p className="text-[color:var(--text-secondary)]">Let's connect</p>
+        </div>
 
-        <div className="max-w-2xl">
-          <p className="text-xl text-gray-300 mb-8">
-            I'm always open to discussing new opportunities, consulting projects, or just having a chat about DevOps and cloud technologies.
-          </p>
+        <div className="grid sm:grid-cols-3 gap-4 mb-6">
+          <motion.a
+            href={`mailto:${resumeData.email}`}
+            whileHover={{ y: -5 }}
+            className="p-5 rounded-xl border border-[color:var(--border)] bg-[color:var(--bg-card)] hover:border-accent/50 transition-all text-center"
+          >
+            <Mail className="text-accent mx-auto mb-3" size={24} />
+            <p className="font-medium text-sm">Email</p>
+            <p className="text-xs text-[color:var(--text-secondary)] mt-1">{resumeData.email}</p>
+          </motion.a>
 
-          <div className="space-y-4">
-            <a
-              href={`mailto:${resumeData.email}`}
-              className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl hover:border-accent transition-colors"
-            >
-              <Mail className="text-accent" size={24} />
-              <div>
-                <p className="font-medium">Email</p>
-                <p className="text-gray-400">{resumeData.email}</p>
-              </div>
-            </a>
+          <motion.a
+            href={`tel:${resumeData.phone.replace(/\s/g, '')}`}
+            whileHover={{ y: -5 }}
+            className="p-5 rounded-xl border border-[color:var(--border)] bg-[color:var(--bg-card)] hover:border-accent/50 transition-all text-center"
+          >
+            <Phone className="text-accent mx-auto mb-3" size={24} />
+            <p className="font-medium text-sm">Phone</p>
+            <p className="text-xs text-[color:var(--text-secondary)] mt-1">{resumeData.phone}</p>
+          </motion.a>
 
-            <a
-              href={`tel:${resumeData.phone.replace(/\s/g, '')}`}
-              className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl hover:border-accent transition-colors"
-            >
-              <Phone className="text-accent" size={24} />
-              <div>
-                <p className="font-medium">Phone</p>
-                <p className="text-gray-400">{resumeData.phone}</p>
-              </div>
-            </a>
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="p-5 rounded-xl border border-[color:var(--border)] bg-[color:var(--bg-card)] transition-all text-center"
+          >
+            <MapPin className="text-accent mx-auto mb-3" size={24} />
+            <p className="font-medium text-sm">Location</p>
+            <p className="text-xs text-[color:var(--text-secondary)] mt-1">{resumeData.location}</p>
+          </motion.div>
+        </div>
 
-            <div className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl">
-              <MapPin className="text-accent" size={24} />
-              <div>
-                <p className="font-medium">Location</p>
-                <p className="text-gray-400">{resumeData.location}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Consulting CTA */}
-          <div className="mt-12 p-6 bg-gradient-to-r from-accent/20 to-accent/5 border border-accent/30 rounded-xl">
-            <h3 className="text-xl font-semibold mb-2">Need DevOps Consulting?</h3>
-            <p className="text-gray-300 mb-4">
-              Get expert help with your infrastructure, CI/CD pipelines, cloud migration, and more.
+        {/* Consulting CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="relative p-6 rounded-2xl overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-purple-500/20" />
+          <div className="absolute inset-0 bg-[size:20px_20px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]" />
+          <div className="relative">
+            <h3 className="text-xl font-bold mb-2">Need DevOps Consulting?</h3>
+            <p className="text-[color:var(--text-secondary)] mb-4 text-sm">
+              Expert guidance for your infrastructure, CI/CD pipelines, and cloud migration needs.
             </p>
             <a
               href="/consulting"
-              className="inline-block px-6 py-3 bg-accent hover:bg-accent-hover rounded-lg font-medium transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent hover:bg-accent-hover rounded-lg font-medium transition-all hover:scale-105 active:scale-95"
             >
+              <Send size={16} />
               View Consulting Services
             </a>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   )

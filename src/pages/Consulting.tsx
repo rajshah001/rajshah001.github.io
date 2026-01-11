@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
-import { Check, ArrowRight, Mail } from 'lucide-react'
-import Header from '../components/layout/Header'
-import Footer from '../components/layout/Footer'
+import { Check, Mail, Send } from 'lucide-react'
+import BottomNav from '../components/layout/BottomNav'
+import ParticleBackground from '../components/layout/ParticleBackground'
 import { useState } from 'react'
 
 const services = [
@@ -95,18 +95,18 @@ export default function Consulting() {
 
   return (
     <>
-      <Header />
-      <main>
+      <ParticleBackground />
+      <main className="min-h-screen pb-24 md:pb-32">
         {/* Hero */}
-        <section className="pt-32 pb-20 px-6">
+        <section className="pt-32 pb-16 px-6">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
             >
               <h1 className="text-4xl md:text-6xl font-bold mb-6">DevOps & Cloud Consulting</h1>
-              <p className="text-xl text-gray-400">
+              <p className="text-xl text-[color:var(--text-secondary)]">
                 Expert guidance to help you build, scale, and optimize your infrastructure
               </p>
             </motion.div>
@@ -114,27 +114,30 @@ export default function Consulting() {
         </section>
 
         {/* Services */}
-        <section className="section-container">
+        <section className="section-compact">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Services</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold mb-2">Services</h2>
+              <p className="text-[color:var(--text-secondary)]">What I can help you with</p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {services.map((service, index) => (
                 <motion.div
                   key={service.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-accent/50 transition-colors"
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className="p-5 rounded-xl border border-[color:var(--border)] bg-[color:var(--bg-card)] hover:border-accent/50 transition-all"
                 >
-                  <div className="text-4xl mb-4">{service.icon}</div>
-                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-gray-400">{service.description}</p>
+                  <div className="text-3xl mb-3">{service.icon}</div>
+                  <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+                  <p className="text-sm text-[color:var(--text-secondary)]">{service.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -142,54 +145,59 @@ export default function Consulting() {
         </section>
 
         {/* Pricing */}
-        <section className="section-container">
+        <section className="section-compact">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Pricing</h2>
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold mb-2">Pricing</h2>
+              <p className="text-[color:var(--text-secondary)]">Choose the plan that works for you</p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {pricing.map((plan, index) => (
                 <motion.div
                   key={plan.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  className={`relative bg-card border rounded-xl p-8 ${
-                    plan.popular ? 'border-accent' : 'border-border'
+                  viewport={{ once: true, margin: '-100px' }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className={`relative p-6 rounded-xl border transition-all ${
+                    plan.popular
+                      ? 'border-accent bg-[color:var(--bg-card)] shadow-lg shadow-accent/10'
+                      : 'border-[color:var(--border)] bg-[color:var(--bg-card)]'
                   }`}
                 >
                   {plan.popular && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-accent rounded-full text-sm font-medium">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-accent rounded-full text-xs font-medium">
                       Most Popular
                     </div>
                   )}
-                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                  <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
                   <div className="mb-4">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-gray-400 ml-2">{plan.period}</span>
+                    <span className="text-3xl font-bold">{plan.price}</span>
+                    <span className="text-sm text-[color:var(--text-secondary)] ml-2">{plan.period}</span>
                   </div>
-                  <p className="text-gray-400 mb-6">{plan.description}</p>
-                  <ul className="space-y-3 mb-8">
+                  <p className="text-sm text-[color:var(--text-secondary)] mb-4">{plan.description}</p>
+                  <ul className="space-y-2 mb-6">
                     {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2">
-                        <Check className="text-accent flex-shrink-0 mt-1" size={18} />
+                      <li key={feature} className="flex items-start gap-2 text-sm">
+                        <Check className="text-accent flex-shrink-0 mt-0.5" size={16} />
                         <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
                   <a
                     href="mailto:rajshah.comps@gmail.com?subject=Consulting Inquiry"
-                    className="flex items-center justify-center gap-2 w-full py-3 rounded-lg font-medium transition-colors ${
-                      plan.popular
-                        ? 'bg-accent hover:bg-accent-hover text-white'
-                        : 'bg-secondary hover:bg-border text-white'
-                    }"
+                    className="flex items-center justify-center gap-2 w-full py-3 rounded-lg font-medium transition-all hover:scale-105 active:scale-95"
+                    style={{
+                      backgroundColor: plan.popular ? 'var(--accent)' : 'var(--bg-secondary)',
+                    }}
                   >
-                    Get Started <ArrowRight size={18} />
+                    <Send size={16} />
+                    Get Started
                   </a>
                 </motion.div>
               ))}
@@ -198,35 +206,37 @@ export default function Consulting() {
         </section>
 
         {/* FAQ */}
-        <section className="section-container">
+        <section className="section-compact">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
             className="max-w-3xl mx-auto"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-4">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold mb-2">FAQ</h2>
+              <p className="text-[color:var(--text-secondary)]">Common questions</p>
+            </div>
+            <div className="space-y-3">
               {faqs.map((faq, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: '-100px' }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
-                  className="bg-card border border-border rounded-xl overflow-hidden"
+                  className="rounded-xl border border-[color:var(--border)] bg-[color:var(--bg-card)] overflow-hidden"
                 >
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="w-full px-6 py-4 text-left flex items-center justify-between"
+                    className="w-full px-5 py-4 text-left flex items-center justify-between"
                   >
-                    <span className="font-semibold">{faq.question}</span>
+                    <span className="font-medium">{faq.question}</span>
                     <motion.span
                       animate={{ rotate: openFaq === index ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
+                      className="text-[color:var(--text-secondary)]"
                     >
                       ▼
                     </motion.span>
@@ -240,7 +250,7 @@ export default function Consulting() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <p className="px-6 pb-4 text-gray-400">{faq.answer}</p>
+                    <p className="px-5 pb-4 text-sm text-[color:var(--text-secondary)]">{faq.answer}</p>
                   </motion.div>
                 </motion.div>
               ))}
@@ -249,32 +259,36 @@ export default function Consulting() {
         </section>
 
         {/* CTA */}
-        <section className="section-container">
+        <section className="section-compact">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="max-w-3xl mx-auto text-center"
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl mx-auto"
           >
-            <div className="bg-gradient-to-r from-accent/20 to-accent/5 border border-accent/30 rounded-xl p-12">
-              <Mail className="text-accent mx-auto mb-4" size={48} />
-              <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-              <p className="text-gray-300 mb-8">
-                Send me an email and let's discuss how I can help you achieve your DevOps goals.
-              </p>
-              <a
-                href="mailto:rajshah.comps@gmail.com?subject=Consulting Inquiry"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-accent hover:bg-accent-hover rounded-lg font-medium transition-colors"
-              >
-                <Mail size={20} />
-                Get In Touch
-              </a>
+            <div className="relative p-8 rounded-2xl overflow-hidden text-center">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-purple-500/20" />
+              <div className="absolute inset-0 bg-[size:20px_20px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]" />
+              <div className="relative">
+                <Mail className="text-accent mx-auto mb-4" size={40} />
+                <h2 className="text-3xl font-bold mb-3">Ready to Get Started?</h2>
+                <p className="text-[color:var(--text-secondary)] mb-6">
+                  Send me an email and let's discuss how I can help you achieve your DevOps goals.
+                </p>
+                <a
+                  href="mailto:rajshah.comps@gmail.com?subject=Consulting Inquiry"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover rounded-lg font-medium transition-all hover:scale-105 active:scale-95"
+                >
+                  <Mail size={18} />
+                  Get In Touch
+                </a>
+              </div>
             </div>
           </motion.div>
         </section>
       </main>
-      <Footer />
+      <BottomNav />
     </>
   )
 }

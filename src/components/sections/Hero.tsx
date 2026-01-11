@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
 import { resumeData } from '../../data/resume'
 
 export default function Hero() {
@@ -8,15 +8,15 @@ export default function Hero() {
   }
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative">
-      <div className="max-w-6xl mx-auto px-6 py-20">
-        <div className="flex flex-col items-center text-center">
+    <section className="min-h-screen flex items-center justify-center relative px-6">
+      <div className="max-w-4xl w-full">
+        <div className="space-y-8">
           {/* Logo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="w-24 h-24 rounded-2xl bg-accent flex items-center justify-center text-white font-bold text-4xl mb-8"
+            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, type: 'spring' }}
+            className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent to-purple-600 flex items-center justify-center text-white font-bold text-3xl shadow-2xl shadow-accent/25"
           >
             RS
           </motion.div>
@@ -26,8 +26,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex items-center gap-3"
           >
-            <p className="text-xl text-gray-400 mb-4">Hi, I'm</p>
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-accent" />
+            <span className="text-lg text-[color:var(--text-secondary)]">Hi, I'm</span>
           </motion.div>
 
           {/* Name */}
@@ -35,7 +37,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold mb-6"
+            className="text-5xl md:text-7xl font-bold tracking-tight"
           >
             {resumeData.name}
           </motion.h1>
@@ -45,45 +47,79 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-xl md:text-2xl text-gray-400 max-w-2xl mb-8"
+            className="text-xl md:text-2xl text-[color:var(--text-secondary)] max-w-2xl"
           >
             {resumeData.tagline}
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* Social Links */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex items-center gap-4 pt-4"
+          >
+            <a
+              href={resumeData.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-[color:var(--bg-secondary)] hover:bg-accent transition-colors group"
+              aria-label="GitHub"
+            >
+              <Github size={20} className="text-[color:var(--text-secondary)] group-hover:text-white" />
+            </a>
+            <a
+              href={resumeData.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 rounded-xl bg-[color:var(--bg-secondary)] hover:bg-accent transition-colors group"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={20} className="text-[color:var(--text-secondary)] group-hover:text-white" />
+            </a>
+            <a
+              href={`mailto:${resumeData.email}`}
+              className="p-3 rounded-xl bg-[color:var(--bg-secondary)] hover:bg-accent transition-colors group"
+              aria-label="Email"
+            >
+              <Mail size={20} className="text-[color:var(--text-secondary)] group-hover:text-white" />
+            </a>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="flex flex-wrap gap-4 pt-8"
           >
             <a
               href="#projects"
-              className="px-8 py-3 bg-accent hover:bg-accent-hover rounded-lg font-medium transition-colors"
+              className="px-6 py-3 bg-accent hover:bg-accent-hover rounded-xl font-medium transition-all hover:scale-105 active:scale-95"
             >
               View Projects
             </a>
             <a
               href="#contact"
-              className="px-8 py-3 bg-card hover:bg-border border border-border rounded-lg font-medium transition-colors"
+              className="px-6 py-3 bg-[color:var(--bg-secondary)] hover:bg-[color:var(--bg-card)] border border-[color:var(--border)] rounded-xl font-medium transition-all hover:scale-105 active:scale-95"
             >
               Get In Touch
             </a>
           </motion.div>
-
-          {/* Scroll Indicator */}
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            onClick={scrollToNext}
-            className="mt-16 text-gray-500 hover:text-white transition-colors"
-            aria-label="Scroll down"
-          >
-            <ArrowDown size={24} className="animate-bounce" />
-          </motion.button>
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+        onClick={scrollToNext}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 text-[color:var(--text-secondary)] hover:text-[color:var(--text-primary)] transition-colors"
+        aria-label="Scroll down"
+      >
+        <ArrowDown size={24} className="animate-bounce" />
+      </motion.button>
     </section>
   )
 }

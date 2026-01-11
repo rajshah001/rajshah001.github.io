@@ -5,75 +5,82 @@ export default function About() {
   const totalCerts = journeyData.milestones.reduce((sum, m) => sum + m.count, 0)
 
   return (
-    <section id="about" className="section-container">
+    <section id="about" className="section-compact">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.6 }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-12">About</h2>
+        {/* Section Header */}
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold mb-2">About</h2>
+          <p className="text-[color:var(--text-secondary)]">A bit about me and my journey</p>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Bio */}
-          <div>
-            <p className="text-lg text-gray-300 leading-relaxed whitespace-pre-line">
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Bio - takes 2 columns */}
+          <div className="lg:col-span-2">
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-lg text-[color:var(--text-secondary)] leading-relaxed"
+            >
               {resumeData.about}
-            </p>
+            </motion.p>
           </div>
 
-          {/* Journey Tracker */}
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-xl font-semibold mb-2">{journeyData.title}</h3>
-              <p className="text-gray-400">{journeyData.subtitle}</p>
-            </div>
-
-            {/* Progress Stats */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-2xl font-bold">{totalCerts}</span>
-                <span className="text-gray-400">Certifications Earned</span>
+          {/* Journey Tracker - takes 1 column */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-4"
+          >
+            <div className="p-4 rounded-xl border border-[color:var(--border)] bg-[color:var(--bg-card)]">
+              <div className="flex items-baseline justify-between mb-3">
+                <span className="text-3xl font-bold gradient-text">{totalCerts}</span>
+                <span className="text-sm text-[color:var(--text-secondary)]">Certifications</span>
               </div>
 
-              {/* Platform Breakdown */}
-              <div className="space-y-4">
-                {journeyData.milestones.map((milestone) => (
-                  <div key={milestone.platform}>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>{milestone.platform}</span>
-                      <span className="text-gray-400">
-                        {milestone.count}/{milestone.total}
-                      </span>
-                    </div>
-                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${(milestone.count / milestone.total) * 100}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.2 }}
-                        className="h-full rounded-full"
-                        style={{ backgroundColor: milestone.color }}
-                      />
-                    </div>
+              {journeyData.milestones.map((milestone) => (
+                <div key={milestone.platform} className="mb-3 last:mb-0">
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="font-medium">{milestone.platform}</span>
+                    <span className="text-[color:var(--text-secondary)]">
+                      {milestone.count}/{milestone.total}
+                    </span>
                   </div>
-                ))}
-              </div>
+                  <div className="h-1.5 bg-[color:var(--bg-secondary)] rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${(milestone.count / milestone.total) * 100}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                      className="h-full rounded-full"
+                      style={{ backgroundColor: milestone.color }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Volunteering */}
-            <div className="bg-card border border-border rounded-xl p-6">
-              <h4 className="font-semibold mb-3">Community Involvement</h4>
-              <div className="space-y-3">
-                {resumeData.volunteering.map((vol, index) => (
-                  <div key={index} className="text-sm">
-                    <p className="font-medium">{vol.role}</p>
-                    <p className="text-gray-400">{vol.organization} • {vol.period}</p>
-                  </div>
-                ))}
+            {/* Community Badge */}
+            <div className="p-4 rounded-xl border border-[color:var(--border)] bg-[color:var(--bg-card)]">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                  <span className="text-lg">☁️</span>
+                </div>
+                <div>
+                  <p className="font-medium text-sm">AWS Community Builder</p>
+                  <p className="text-xs text-[color:var(--text-secondary)]">Since Feb 2023</p>
+                </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </section>
