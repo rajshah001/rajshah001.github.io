@@ -1,45 +1,25 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, User, Mail, Sun, Moon } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { Home, Briefcase, Linkedin, Mail, Github, Sun, Moon } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../../contexts/ThemeContext'
 
 const navItems = [
   { name: 'Home', icon: Home, href: '/' },
-  { name: 'About', icon: User, href: '#about' },
-  { name: 'Contact', icon: Mail, href: '#contact' },
+  { name: 'Consulting', icon: Briefcase, href: '/consulting' },
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/in/rajshah29', external: true },
+  { name: 'Email', icon: Mail, href: 'mailto:rajshah.comps@gmail.com', external: true },
+  { name: 'GitHub', icon: Github, href: 'https://github.com/rajshah001', external: true },
 ]
 
 export default function BottomNav() {
-  const [activeSection, setActiveSection] = useState('Home')
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const location = useLocation()
   const { theme, toggleTheme } = useTheme()
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['about', 'contact']
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-            setActiveSection(section.charAt(0).toUpperCase() + section.slice(1))
-            break
-          }
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (location.pathname !== '/' && href.startsWith('#')) {
-      e.preventDefault()
-      window.location.href = `/${href}`
-    }
+  const isActive = (href: string) => {
+    if (href === '/') return location.pathname === '/'
+    return location.pathname === href
   }
 
   return (
@@ -55,26 +35,23 @@ export default function BottomNav() {
           {/* Background */}
           <div className="absolute inset-0 bg-[color:var(--bg-card)]/90 backdrop-blur-xl rounded-full border border-[color:var(--border)]/50 shadow-2xl" />
 
-          <div className="relative flex items-center justify-center gap-2 px-4 py-3">
+          <div className="relative flex items-center justify-center gap-1 px-4 py-3">
             {navItems.map((item) => {
               const Icon = item.icon
-              const isActive = activeSection === item.name || (item.href === '/' && location.pathname === '/')
+              const active = isActive(item.href)
 
-              return (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="relative"
-                >
+              const linkContent = (
+                <>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`relative flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
-                      isActive ? 'text-accent' : 'text-gray-400 hover:text-white'
+                    onMouseEnter={() => setHoveredItem(item.name)}
+                    onMouseLeave={() => setHoveredItem(null)}
+                    className={`relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+                      active ? 'text-accent' : 'text-gray-400 hover:text-white'
                     }`}
                   >
-                    {isActive && (
+                    {active && (
                       <motion.div
                         layoutId="activeTab"
                         className="absolute inset-0 bg-[color:var(--bg-secondary)] rounded-full"
@@ -82,10 +59,42 @@ export default function BottomNav() {
                       />
                     )}
                     <Icon size={18} className="relative z-10" />
-                    <span className="relative z-10 text-sm font-medium">
-                      {item.name}
-                    </span>
                   </motion.div>
+
+                  {/* Tooltip */}
+                  <AnimatePresence>
+                    {hoveredItem === item.name && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute bottom-full mb-3 px-3 py-1 bg-[color:var(--bg-card)] border border-[color:var(--border)] rounded-lg text-xs whitespace-nowrap"
+                      >
+                        {item.name}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
+              )
+
+              if (item.external) {
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative"
+                  >
+                    {linkContent}
+                  </a>
+                )
+              }
+
+              return (
+                <Link key={item.name} to={item.href} className="relative">
+                  {linkContent}
                 </Link>
               )
             })}
@@ -117,28 +126,47 @@ export default function BottomNav() {
         <div className="flex items-center justify-around px-4 py-3">
           {navItems.map((item) => {
             const Icon = item.icon
-            const isActive = activeSection === item.name || (item.href === '/' && location.pathname === '/')
+            const active = isActive(item.href)
 
-            return (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className="relative flex flex-col items-center gap-1"
-              >
+            const linkContent = (
+              <>
                 <motion.div
                   whileTap={{ scale: 0.9 }}
-                  className={`transition-colors ${isActive ? 'text-accent' : 'text-gray-400'}`}
+                  className={`transition-colors ${active ? 'text-accent' : 'text-gray-400'}`}
                 >
                   <Icon size={20} />
                 </motion.div>
-                {isActive && (
+                {active && (
                   <motion.div
                     layoutId="activeMobileTab"
                     className="w-1 h-1 rounded-full bg-accent"
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   />
                 )}
+              </>
+            )
+
+            if (item.external) {
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative flex flex-col items-center gap-1"
+                >
+                  {linkContent}
+                </a>
+              )
+            }
+
+            return (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="relative flex flex-col items-center gap-1"
+              >
+                {linkContent}
               </Link>
             )
           })}
