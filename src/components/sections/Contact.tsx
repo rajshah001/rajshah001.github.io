@@ -10,7 +10,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.6 }}
-        className="max-w-3xl"
+        className="max-w-4xl mx-auto text-center"
       >
         <div className="mb-8">
           <h2 className="text-3xl font-bold mb-2">Get In Touch</h2>
@@ -54,7 +54,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative p-6 rounded-2xl overflow-hidden"
+          className="relative p-8 rounded-2xl overflow-hidden text-center"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-purple-500/20" />
           <div className="absolute inset-0 bg-[size:20px_20px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]" />

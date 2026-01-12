@@ -57,7 +57,7 @@ export default function BottomNav() {
           {/* Background blur */}
           <div className="absolute inset-0 bg-[color:var(--bg-card)]/80 backdrop-blur-xl rounded-full border border-[color:var(--border)]/50 shadow-2xl" />
 
-          <div className="relative flex items-center gap-1 px-2 py-2">
+          <div className="relative flex items-center justify-center gap-1 px-2 py-2">
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = activeSection === item.name || (item.href === '/' && location.pathname === '/')
