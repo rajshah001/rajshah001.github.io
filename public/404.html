@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      var path = window.location.pathname;
+      var segment = path.startsWith('/') ? path.slice(1) : path;
+      if (segment === '') {
+        segment = '/';
+      }
+      window.history.replaceState({}, '', '/' + segment);
+      window.location.replace('/#' + segment);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>

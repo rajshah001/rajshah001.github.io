@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Briefcase, Award, User, Mail, Sun, Moon } from 'lucide-react'
+import { Home, User, Mail, Sun, Moon } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useTheme } from '../../contexts/ThemeContext'
 
 const navItems = [
   { name: 'Home', icon: Home, href: '/' },
   { name: 'About', icon: User, href: '#about' },
-  { name: 'Experience', icon: Briefcase, href: '#experience' },
-  { name: 'Projects', icon: Award, href: '#projects' },
   { name: 'Contact', icon: Mail, href: '#contact' },
 ]
 
@@ -19,7 +17,7 @@ export default function BottomNav() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'experience', 'projects', 'contact']
+      const sections = ['about', 'contact']
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
@@ -51,13 +49,13 @@ export default function BottomNav() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden md:block"
+        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 hidden md:block"
       >
         <div className="relative">
-          {/* Background blur */}
-          <div className="absolute inset-0 bg-[color:var(--bg-card)]/80 backdrop-blur-xl rounded-full border border-[color:var(--border)]/50 shadow-2xl" />
+          {/* Background */}
+          <div className="absolute inset-0 bg-[color:var(--bg-card)]/90 backdrop-blur-xl rounded-full border border-[color:var(--border)]/50 shadow-2xl" />
 
-          <div className="relative flex items-center justify-center gap-1 px-2 py-2">
+          <div className="relative flex items-center justify-center gap-2 px-4 py-3">
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = activeSection === item.name || (item.href === '/' && location.pathname === '/')
@@ -70,7 +68,7 @@ export default function BottomNav() {
                   className="relative"
                 >
                   <motion.div
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className={`relative flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
                       isActive ? 'text-accent' : 'text-gray-400 hover:text-white'
@@ -84,7 +82,7 @@ export default function BottomNav() {
                       />
                     )}
                     <Icon size={18} className="relative z-10" />
-                    <span className="relative z-10 text-sm font-medium hidden lg:block">
+                    <span className="relative z-10 text-sm font-medium">
                       {item.name}
                     </span>
                   </motion.div>
@@ -93,11 +91,11 @@ export default function BottomNav() {
             })}
 
             {/* Divider */}
-            <div className="w-px h-6 bg-[color:var(--border)] mx-2" />
+            <div className="w-px h-6 bg-[color:var(--border)] mx-1" />
 
             {/* Theme Toggle */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={toggleTheme}
               className="flex items-center justify-center w-10 h-10 rounded-full text-gray-400 hover:text-white transition-colors"
@@ -114,7 +112,7 @@ export default function BottomNav() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[color:var(--bg-card)]/80 backdrop-blur-xl border-t border-[color:var(--border)]/50"
+        className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-[color:var(--bg-card)]/90 backdrop-blur-xl border-t border-[color:var(--border)]/50"
       >
         <div className="flex items-center justify-around px-4 py-3">
           {navItems.map((item) => {
