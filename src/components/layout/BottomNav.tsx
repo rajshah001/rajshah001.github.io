@@ -31,8 +31,8 @@ export default function BottomNav() {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="fixed bottom-8 left-0 right-0 z-50 hidden md:block"
       >
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="relative flex items-center justify-center gap-1 px-4 py-3">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="relative flex items-center justify-center gap-1 px-3 py-3">
             {/* Background */}
             <div className="absolute inset-0 bg-[color:var(--bg-card)]/90 backdrop-blur-xl rounded-full border border-[color:var(--border)]/50 shadow-2xl -z-10" />
 
